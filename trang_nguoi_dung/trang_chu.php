@@ -37,14 +37,15 @@ $san_pham_moi = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- MENU -->
         <nav class="main-menu">
-            <a href="#">NỮ</a>
-            <a href="#">NAM</a>
-            <a href="#">TRẺ EM</a>
-            <a href="#">SANDALS</a>
-            <a href="#">JIBBITZ™</a>
-            <a href="#">XU HƯỚNG</a>
-            <a href="#">ƯU ĐÃI</a>
-            <a href="#">CLICK&COLLECT</a>
+            <a href="danh_muc.php?loai=hangmoi"></a>
+            <a href="danh_muc.php?loai=banchay">NỮ</a>
+            <a href="danh_muc.php?loai=giaydecao">NAM</a>
+            <a href="danh_muc.php?loai=xuhuong">TRẺ EM</a>
+            <a href="danh_muc.php?loai=collab">SANDALS</a>
+            <a href="danh_muc.php?loai=thethao">JIBBITZ™</a>
+            <a href="danh_muc.php?loai=nu">XU HƯỚNG</a>
+            <a href="danh_muc.php?loai=nam">ƯU ĐÃI</a>
+            <a href="danh_muc.php?loai=treem">BLACK FRIDAY</a>
         </nav>
 
         <!-- SEARCH -->
