@@ -1,30 +1,26 @@
 <?php
-require_once __DIR__ . '/../cau_hinh/ket_noi.php';
-require_once __DIR__ . '/../cau_hinh/ham.php';
+session_start();
+require_once "../includes/db.php";
+require_once "../includes/functions_cart.php";
 
-init_gio_hang();
+require_login();
 
-$id_sp = intval($_POST['id_san_pham']);
-$so_luong = intval($_POST['so_luong']);
+$id_nguoi_dung = get_user_id();
+$id_san_pham = (int)($_POST['id_san_pham'] ?? 0);
+$so_luong = (int)($_POST['so_luong'] ?? 1);
+$action = $_POST['action'] ?? 'add';
 
-$sp = $pdo->prepare("SELECT * FROM SANPHAM WHERE id_san_pham = :id");
-$sp->execute([':id' => $id_sp]);
-$sp = $sp->fetch();
+$error = add_to_cart($pdo, $id_nguoi_dung, $id_san_pham, $so_luong);
 
-if (!$sp) {
-    die("Sản phẩm không tồn tại.");
+if ($error) {
+    // quay lại chi tiết sp với thông báo
+    header("Location: chi_tiet_san_pham.php?id={$id_san_pham}&err=" . urlencode($error));
+    exit;
 }
 
-if (!isset($_SESSION['gio_hang'][$id_sp])) {
-    $_SESSION['gio_hang'][$id_sp] = [
-        'ten' => $sp['ten_san_pham'],
-        'gia' => $sp['gia'],
-        'so_luong' => $so_luong,
-        'hinh' => $sp['hinh_anh']
-    ];
+if ($action === "buy") {
+    header("Location: gio_hang.php");
 } else {
-    $_SESSION['gio_hang'][$id_sp]['so_luong'] += $so_luong;
+    header("Location: chi_tiet_san_pham.php?id={$id_san_pham}&ok=1");
 }
-
-header("Location: gio_hang.php");
 exit;

@@ -69,7 +69,7 @@ $san_pham_moi = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- ================== HERO ================== -->
 <section class="hero-block">
-    <img src="../assets/img/hero_doraemon.jpg" class="hero-img">
+    <img src="../assets/img/logoto.jpg" class="hero-img">
 </section>
 <!-- TABS GIỚI TÍNH -->
 <section class="gender-tabs">
