@@ -2,65 +2,71 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once __DIR__ . '/../cau_hinh/ket_noi.php';
+require_once __DIR__ . '/../cau_hinh/ham.php';
 ?>
 
-<link rel="stylesheet" href="../assets/css/header.css">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Crocs Việt Nam</title>
 
-<header class="main-header">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
 
-    <!-- HÀNG TRÊN -->
-    <div class="topbar">
-        <span>Miễn phí giao hàng cho đơn từ 500.000đ</span>
-        <span>Đăng ký nhận ưu đãi 100.000đ</span>
-    </div>
+<body>
 
-    <!-- THANH CHÍNH -->
-    <div class="header-middle">
+<!-- =============== TOPBAR ================= -->
+<div class="topbar">
+    <span>Tặng VOUCHER 100K khi tham gia Crocs Club</span>
+    <span>Đăng ký & nhận 100.000 VND</span>
+</div>
 
-        <!-- LOGO -->
-        <a href="/webnhom7/trang_nguoi_dung/trang_chu.php" class="logo">
-            <img src="../assets/img/logo.png" alt="crocs">
-        </a>
+<!-- =============== HEADER CHÍNH =============== -->
+<header class="header-wrap">
 
-        <!-- MENU -->
-        <nav class="main-menu">
-            <a href="../trang_nguoi_dung/danh_muc.php?id_danh_muc=2">NỮ</a>
-            <a href="../trang_nguoi_dung/danh_muc.php?id_danh_muc=1">NAM</a>
-            <a href="../trang_nguoi_dung/danh_muc.php?id_danh_muc=3">TRẺ EM</a>
-            <a href="#">SANDALS</a>
-            <a href="#">JIBBITZ™</a>
-            <a href="#">XU HƯỚNG</a>
-            <a href="#">ƯU ĐÃI</a>
-        </nav>
+    <!-- LOGO -->
+    <a class="logo" href="/webnhom7/trang_nguoi_dung/trang_chu.php">
+        <img src="../assets/img/logo.png" alt="Crocs Việt Nam">
+    </a>
+
+    <!-- MENU CHÍNH -->
+    <nav class="menu">
+        <a href="danh_muc.php?loai=nu">NỮ</a>
+        <a href="danh_muc.php?loai=nam">NAM</a>
+        <a href="danh_muc.php?loai=treem">TRẺ EM</a>
+        <a href="danh_muc.php?loai=sandals">SANDALS</a>
+        <a href="danh_muc.php?loai=jibbitz">JIBBITZ™</a>
+        <a href="danh_muc.php?loai=xuhuong">XU HƯỚNG</a>
+        <a href="danh_muc.php?loai=uudai" class="highlight">ƯU ĐÃI</a>
+        <a href="danh_muc.php?loai=blackfriday" class="highlight">BLACK FRIDAY</a>
+    </nav>
+
+    <!-- SEARCH + ACCOUNT + CART -->
+    <div class="right-box">
 
         <!-- SEARCH -->
-        <form action="../trang_nguoi_dung/tim_kiem.php" method="get" class="search-box">
-            <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
-            <button><i class="fa fa-search"></i></button>
-        </form>
-
-        <!-- ICON -->
-        <div class="header-icons">
-
-            <!-- TÀI KHOẢN -->
-            <?php if (isset($_SESSION['user'])): ?>
-                <div class="user-box">
-                    <span class="hi">Xin chào, <?= htmlspecialchars($_SESSION['user']['ho_ten']) ?></span>
-                    <a href="/webnhom7/tai_khoan/dang_xuat.php">Đăng xuất</a>
-                </div>
-            <?php else: ?>
-                <a href="/webnhom7/tai_khoan/dang_nhap.php"><i class="fa fa-user"></i></a>
-            <?php endif; ?>
-
-            <!-- GIỎ HÀNG -->
-            <a href="/webnhom7/trang_nguoi_dung/gio_hang.php" class="cart-icon">
-                <i class="fa fa-shopping-cart"></i>
-                <span class="cart-num">
-                    <?= isset($_SESSION['gio_hang']) ? count($_SESSION['gio_hang']) : 0 ?>
-                </span>
-            </a>
-
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm ...">
+            <i class="fa fa-search"></i>
         </div>
+
+        <!-- ACCOUNT ICON -->
+        <a class="icon" href="/webnhom7/tai_khoan/dang_nhap.php">
+            <i class="fa-regular fa-user"></i>
+        </a>
+
+        <!-- CART ICON -->
+        <a class="icon" href="/webnhom7/trang_nguoi_dung/gio_hang.php">
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <span class="cart-count">
+                <?= isset($_SESSION['gio_hang']) ? count($_SESSION['gio_hang']) : 0 ?>
+            </span>
+        </a>
+
     </div>
 
 </header>

@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f6f6f6;
+}
+
+.register-wrapper {
+    width: 450px;
+    background: white;
+    padding: 30px 40px;
+    margin: 40px auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.desc {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.register-form input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.form-group.full {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.phone-input {
+    display: flex;
+}
+
+.phone-input select {
+    width: 70px;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.phone-input input {
+    border-radius: 0 5px 5px 0;
+}
+
+.form-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.btn-cancel {
+    background: #ddd;
+    color: black;
+}
+
+.btn-submit {
+    background: black;
+    color: white;
+}
+
+.btn-submit:hover {
+    opacity: 0.8;
+}
