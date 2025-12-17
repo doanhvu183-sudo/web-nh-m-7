@@ -1,32 +1,58 @@
-<?php 
-// LOAD DB
-if (!isset($conn)) {
-    include_once __DIR__ . "/../includes/db.php";
-}
+<?php
+// layout_admin.php
 ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $title ?? "Admin Panel"; ?></title>
+    <title><?= $title ?? "Quản trị" ?></title>
 
-    <link rel="stylesheet" href="/webnhom7/admin/assets/css/neo_admin.css?v=3001">
+    <link rel="stylesheet" href="/webnhom7/admin/assets/css/neo_admin.css?v=6001">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
-<?php include __DIR__ . "/sidebar.php"; ?>
+    <?php include __DIR__ . "/sidebar.php"; ?>
 
-<div class="main-content">
-    <?php include __DIR__ . "/header.php"; ?>
+    <main id="mainContent" class="main-content">
+        <?php include __DIR__ . "/header.php"; ?>
 
-    <div class="page-area">
-        <?php include $view_file; ?>
-    </div>
-</div>
+        <div class="page">
+            <?php include $view_file; ?>
+        </div>
+    </main>
 
-<script src="/webnhom7/admin/assets/js/admin.js?v=3001"></script>
+<script>
+// SIDEBAR COLLAPSE
+document.getElementById("btnSidebar").onclick = () => {
+    let sb = document.getElementById("sidebar");
+    let mc = document.getElementById("mainContent");
+
+    sb.classList.toggle("collapsed");
+    mc.classList.toggle("collapsed");
+
+    localStorage.setItem("sidebar-collapsed", sb.classList.contains("collapsed"));
+};
+
+// LOAD SIDEBAR STATE
+if (localStorage.getItem("sidebar-collapsed") === "true") {
+    document.getElementById("sidebar").classList.add("collapsed");
+    document.getElementById("mainContent").classList.add("collapsed");
+}
+
+// DARK MODE
+document.getElementById("toggleDark").onclick = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkmode", document.body.classList.contains("dark"));
+};
+if (localStorage.getItem("darkmode") === "true") {
+    document.body.classList.add("dark");
+}
+</script>
 
 </body>
 </html>

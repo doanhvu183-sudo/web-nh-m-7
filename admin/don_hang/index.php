@@ -1,16 +1,15 @@
 <?php
 include_once __DIR__ . "/../includes/db.php";
 
-$title = "Quản lý đơn hàng (Premium)";
-
-// Lấy danh sách đơn
+/* LẤY TẤT CẢ ĐƠN HÀNG */
 $sql = "
-    SELECT dh.*, nd.ho_ten AS ten_khach
+    SELECT dh.*, dh.ho_ten_nhan AS ten_khach
     FROM donhang dh
-    LEFT JOIN nguoidung nd ON dh.id_nguoi_dung = nd.id_nguoi_dung
-    ORDER BY dh.ngay_dat DESC
+    ORDER BY dh.id_don_hang DESC
 ";
-$orders = $conn->query($sql)->fetchAll();
+$stm = $conn->query($sql);
+$orders = $stm->fetchAll(PDO::FETCH_ASSOC);
 
+$title = "Quản lý đơn hàng (Premium)";
 $view_file = __DIR__ . "/view_list.php";
 include "../layout/layout_admin.php";

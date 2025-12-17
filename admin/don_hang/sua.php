@@ -24,9 +24,8 @@ $stmt_items = $conn->prepare($sql_items);
 $stmt_items->execute([$id]);
 $items = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
 
-/* CẬP NHẬT */
+/* UPDATE */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     $ho_ten = $_POST["ho_ten"];
     $so_dien_thoai = $_POST["so_dien_thoai"];
     $dia_chi = $_POST["dia_chi"];
@@ -45,135 +44,158 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: xem.php?id=" . $id);
     exit;
 }
-
 ?>
 
 <style>
-.form-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    max-width: 700px;
+.grid-2 {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 25px;
 }
 
-.form-card h3 {
-    margin-top: 0;
+.card {
+    background: var(--card-bg);
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    margin: 0 0 18px 0;
     font-size: 18px;
+    font-weight: 700;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .form-group label {
     font-size: 14px;
     font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    margin-top: 5px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid #d7d7d7;
+    background: #fff;
+    font-size: 15px;
 }
 
 .btn-save {
+    width: 100%;
     background: #4f46e5;
-    padding: 10px 16px;
-    color: white;
-    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 12px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
-    margin-top: 10px;
+    color: white;
+    transition: 0.2s;
 }
 
-.items-box {
-    margin-top: 25px;
-    padding: 15px;
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+.btn-save:hover {
+    background: #4338ca;
 }
 
-.item-row {
+/* SẢN PHẨM */
+.product-item {
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+    gap: 14px;
+    margin-bottom: 16px;
 }
 
-.item-row img {
-    width: 55px;
-    height: 55px;
-    border-radius: 8px;
+.product-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
     object-fit: cover;
-    margin-right: 15px;
 }
 
-.item-info {
-    font-size: 14px;
+.product-info {
+    font-size: 14.5px;
+}
+.product-info strong {
+    font-size: 15px;
 }
 </style>
 
 <h2 class="page-title">Chỉnh sửa đơn hàng #<?= $don["id_don_hang"] ?></h2>
 
-<div class="form-card">
+<div class="grid-2">
 
-<form method="post">
+    <!-- CỘT TRÁI -->
+    <div>
+        <div class="card">
+            <h3>Thông tin khách hàng</h3>
 
-    <h3>Thông tin khách hàng</h3>
+            <form method="post">
 
-    <div class="form-group">
-        <label>Họ tên</label>
-        <input type="text" name="ho_ten" value="<?= $don["ho_ten_nhan"] ?>" required>
-    </div>
+                <div class="form-group">
+                    <label>Họ tên</label>
+                    <input type="text" name="ho_ten" value="<?= $don["ho_ten_nhan"] ?>" required>
+                </div>
 
-    <div class="form-group">
-        <label>Điện thoại</label>
-        <input type="text" name="so_dien_thoai" value="<?= $don["so_dien_thoai_nhan"] ?>" required>
-    </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text" name="so_dien_thoai" value="<?= $don["so_dien_thoai_nhan"] ?>" required>
+                </div>
 
-    <div class="form-group">
-        <label>Địa chỉ</label>
-        <input type="text" name="dia_chi" value="<?= $don["dia_chi_nhan"] ?>" required>
-    </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input type="text" name="dia_chi" value="<?= $don["dia_chi_nhan"] ?>" required>
+                </div>
 
-    <div class="form-group">
-        <label>Ghi chú</label>
-        <textarea name="ghi_chu" rows="3"><?= $don["ghi_chu"] ?></textarea>
-    </div>
+                <div class="form-group">
+                    <label>Ghi chú</label>
+                    <textarea name="ghi_chu" rows="3"><?= $don["ghi_chu"] ?></textarea>
+                </div>
 
-    <div class="form-group">
-        <label>Trạng thái đơn hàng</label>
-        <select name="trang_thai">
-            <option <?= $don["trang_thai"] === "Chờ xác nhận" ? "selected" : "" ?>>Chờ xác nhận</option>
-            <option <?= $don["trang_thai"] === "Đã xác nhận" ? "selected" : "" ?>>Đã xác nhận</option>
-            <option <?= $don["trang_thai"] === "Đang giao" ? "selected" : "" ?>>Đang giao</option>
-            <option <?= $don["trang_thai"] === "Đã giao" ? "selected" : "" ?>>Đã giao</option>
-            <option <?= $don["trang_thai"] === "Hủy" ? "selected" : "" ?>>Hủy</option>
-        </select>
-    </div>
+                <div class="form-group">
+                    <label>Trạng thái đơn hàng</label>
+                    <select name="trang_thai">
+                        <?php 
+                        $statusList = ["Chờ xác nhận", "Đã xác nhận", "Đang giao", "Đã giao", "Hủy", "Từ chối"];
+                        foreach ($statusList as $st): ?>
+                            <option value="<?= $st ?>" <?= $don["trang_thai"] === $st ? "selected" : "" ?>>
+                                <?= $st ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-    <button class="btn-save">Lưu thay đổi</button>
-</form>
-
-</div>
-
-<div class="items-box">
-    <h3>Sản phẩm trong đơn</h3>
-
-    <?php foreach ($items as $it): ?>
-    <div class="item-row">
-        <img src="/webnhom7/assets/img/<?= $it["hinh_anh"] ?>">
-        <div class="item-info">
-            <strong><?= $it["ten_san_pham"] ?></strong><br>
-            Số lượng: <?= $it["so_luong"] ?><br>
-            Giá: <?= number_format($it["gia"]) ?> đ
+                <button class="btn-save">Lưu thay đổi</button>
+            </form>
         </div>
     </div>
-    <?php endforeach; ?>
+
+    <!-- CỘT PHẢI -->
+    <div>
+
+        <div class="card">
+            <h3>Sản phẩm trong đơn</h3>
+
+            <?php foreach ($items as $it): ?>
+                <div class="product-item">
+                    <img src="/webnhom7/assets/img/<?= $it["hinh_anh"] ?>">
+                    <div class="product-info">
+                        <strong><?= $it["ten_san_pham"] ?></strong><br>
+                        Số lượng: <?= $it["so_luong"] ?><br>
+                        Giá: <?= number_format($it["gia"]) ?> đ
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+    </div>
 
 </div>
